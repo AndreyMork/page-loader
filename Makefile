@@ -5,6 +5,10 @@ build:
 	rm -rf dist
 	npm run build
 
+link:
+	make build
+	sudo npm link
+
 publish:
 	npm publish
 
@@ -19,3 +23,6 @@ test-coverage:
 
 watch-test:
 	npm run watch-test
+
+page-loader:
+	npm run babel-node src/bin/page-loader.js https://hexlet.io/courses
