@@ -1,5 +1,6 @@
 #! /usr/bin/env node
 import program from 'commander';
+import path from 'path';
 import pageLoader from '../';
 import { version } from '../../package.json';
 
@@ -7,9 +8,9 @@ program
   .description('description')
   .version(version)
   .arguments('<url>')
-  .option('-o, --output', 'path to html')
+  .option('-o, --output [path]', 'path to html')
   .action((url) => {
-    const dir = program.output ? program.output : process.cwd();
-    pageLoader(url, dir);
+    const dirName = path.normalize(program.output || '');
+    pageLoader(url, dirName);
   })
   .parse(process.argv);
