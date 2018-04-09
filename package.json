@@ -1,0 +1,45 @@
+{
+  "name": "aethra-page-loader",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "bin": {
+    "page-loader": "dist/bin/page-loader.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "babel-node": "babel-node",
+    "test": "jest",
+    "test-coverage": "jest --coverage",
+    "eslint": "eslint",
+    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
+    "prepublishOnly": "npm run build",
+    "watch-test": "jest --watch --notify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreyMork/page-loader"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "*",
+    "babel-core": "*",
+    "babel-eslint": "*",
+    "babel-jest": "*",
+    "babel-preset-env": "*",
+    "babel-preset-stage-0": "*",
+    "eslint": "*",
+    "eslint-config-airbnb-base": "*",
+    "eslint-plugin-import": "*",
+    "eslint-plugin-jest": "*",
+    "jest": "*",
+    "jest-cli": "*"
+  },
+  "bugs": {
+    "url": "git+https://github.com/AndreyMork/page-loader"
+  },
+  "homepage": "git+https://github.com/AndreyMork/page-loader#readme"
+}
