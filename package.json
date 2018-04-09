@@ -36,10 +36,16 @@
     "eslint-plugin-import": "*",
     "eslint-plugin-jest": "*",
     "jest": "*",
-    "jest-cli": "*"
+    "jest-cli": "*",
+    "nock": "^9.2.3"
   },
   "bugs": {
     "url": "git+https://github.com/AndreyMork/page-loader"
   },
-  "homepage": "git+https://github.com/AndreyMork/page-loader#readme"
+  "homepage": "git+https://github.com/AndreyMork/page-loader#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "commander": "^2.15.1",
+    "mz": "^2.7.0"
+  }
 }
