@@ -15,8 +15,8 @@ beforeAll(async () => {
 });
 
 afterEach(async () => {
-  (await fs.readdir(tempDirPath))
-    .forEach(file => fs.unlink(path.join(tempDirPath, file)));
+  const files = await fs.readdir(tempDirPath);
+  files.forEach(file => fs.unlink(path.join(tempDirPath, file)));
 });
 
 afterAll(async () => {
