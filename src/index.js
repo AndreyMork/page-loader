@@ -19,9 +19,10 @@ const buildFileNameFromUrl = (url) => {
 export default (url, output) => {
   const fileName = buildFileNameFromUrl(url);
 
-  axios.get(url)
-    .then(({ data }) => fs.writeFile(nodePath.join(output, fileName), data))
-    .catch((err) => {
-      throw err;
-    });
+  return new Promise((fulfill, reject) => {
+    axios.get(url)
+      .then(({ data }) => fs.writeFile(nodePath.join(output, fileName), data))
+      .then(fulfill)
+      .catch(reject);
+  });
 };
