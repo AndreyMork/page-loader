@@ -9,6 +9,7 @@
 [![npm](https://img.shields.io/npm/v/aethra-page-loader.svg?style=flat)](https://www.npmjs.com/package/aethra-page-loader)
 ***
 ## Description
+Downloads a page from the Web and all the resourses associated with it for the offline use.
 
 ***
 ## Installation
