@@ -20,11 +20,7 @@ afterEach(async () => {
 });
 
 afterAll(async () => {
-  try {
-    await fs.rmdir(tempDirPath);
-  } catch (err) {
-    throw err;
-  }
+  await fs.rmdir(tempDirPath);
 });
 
 
@@ -34,11 +30,7 @@ test('page not found', async () => {
     .get('')
     .reply(404, 'check');
 
-  try {
-    await pageLoader(url, tempDirPath);
-  } catch (err) {
-    expect(err).toBeInstanceOf(Error);
-  }
+  expect(pageLoader(url, tempDirPath)).rejects.toBeInstanceOf(Error);
 });
 
 test('test 1', async () => {
