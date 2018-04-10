@@ -14,7 +14,6 @@ const buildFileNameFromUrl = (url) => {
 };
 
 // TODO: mkdirp
-// TODO: url encoding
 
 export default (url, output) => {
   const fileName = buildFileNameFromUrl(url);
