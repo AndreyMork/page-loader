@@ -12,7 +12,18 @@
 
 ***
 ## Installation
-
+```$ npm install aethra-page-loader```
 ## Usage
+    Usage: page-loader [options] <url>
+
+    Downloads a page from the Web and all the resourses associated with it for the offline use.
+
+    Options:
+
+      -V, --version        output the version number
+      -o, --output [path]  path to the destination folder
+      -h, --help           output usage information
 
 ## Example
+
+```$ page-loader --output ./htmldir https://www.wikipedia.org```
