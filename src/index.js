@@ -20,8 +20,5 @@ export default (url, output) => {
   const { href: encodedUrl } = new nodeUrl.URL(url);
 
   return axios.get(encodedUrl)
-    .then(({ data }) => fs.writeFile(nodePath.join(output, fileName), data))
-    .catch((err) => {
-      throw err;
-    });
+    .then(({ data }) => fs.writeFile(nodePath.join(output, fileName), data));
 };
