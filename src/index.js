@@ -6,9 +6,9 @@ import nodePath from 'path';
 const buildFileNameFromUrl = (url) => {
   const { hostname, path } = nodeUrl.parse(url);
   const fileName =
-    `${hostname}${path}`
-      .replace(/[\W_]$/, '')
-      .replace(/[\W_]+/g, '-');
+    `${hostname}${path}` // TODO: match not latin [a-zA-Z] letters
+      .replace(/^[\W_]$/, '') // \W matches not [a-zA-Z] letters
+      .replace(/[\W_]+/g, '-'); // e.g.: æ, ы, ó, ä
 
   return `${fileName}.html`;
 };
@@ -18,9 +18,12 @@ const buildFileNameFromUrl = (url) => {
 
 export default (url, output) => {
   const fileName = buildFileNameFromUrl(url);
+  const { href: encodedUrl } = new nodeUrl.URL(url);
 
-  return axios.get(url)
+  return axios.get(encodedUrl)
     .then(({ data }) => fs.writeFile(nodePath.join(output, fileName), data))
     .then()
-    .catch(err => err);
+    .catch((err) => {
+      throw err;
+    });
 };
