@@ -21,7 +21,6 @@ export default (url, output) => {
 
   return axios.get(encodedUrl)
     .then(({ data }) => fs.writeFile(nodePath.join(output, fileName), data))
-    .then()
     .catch((err) => {
       throw err;
     });
