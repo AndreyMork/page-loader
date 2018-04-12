@@ -25,4 +25,6 @@ watch-test:
 	npm run watch-test
 
 page-loader:
-	npm run babel-node src/bin/page-loader.js https://hexlet.io/courses
+	rm -rf temp
+	mkdir temp
+	npm run babel-node src/bin/page-loader.js https://wikipedia.org
