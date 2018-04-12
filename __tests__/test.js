@@ -8,8 +8,8 @@ import pageLoader from '../src';
 
 axios.defaults.adapter = httpAdapter;
 
-let tempDirPath;
 
+let tempDirPath;
 beforeAll(async () => {
   tempDirPath = await fs.mkdtemp(path.join(os.tmpdir(), 'page-loader-test-'));
 });
@@ -23,7 +23,6 @@ afterAll(async () => {
   await fs.rmdir(tempDirPath);
 });
 
-
 test('page not found', async () => {
   const url = 'https://hexlet.io/courses';
   nock(url)
@@ -33,12 +32,13 @@ test('page not found', async () => {
   expect(pageLoader(url, tempDirPath)).rejects.toBeInstanceOf(Error);
 });
 
+
 test('test 1', async () => {
   const url = 'https://hexlet.io/courses';
   const htmlName = 'hexlet-io-courses.html';
   nock(url)
     .get('')
-    .reply(200, 'check');
+    .reply(200, '<html><head></head><body>check</body></html>');
 
   await pageLoader(url, tempDirPath);
   const files = await fs.readdir(tempDirPath);
@@ -46,5 +46,5 @@ test('test 1', async () => {
   expect(files).toContain(htmlName);
 
   const body = await fs.readFile(path.join(tempDirPath, htmlName), 'utf-8');
-  expect(body).toBe('check');
+  expect(body).toBe('<html><head></head><body>check</body></html>');
 });
