@@ -10,7 +10,10 @@ const replaceLocalLinks = (html, resourcesDirName) => {
   const $ = cheerio.load(html);
 
   const replaceLink = (i, link) => {
-    if (!link || !utils.isLocal(link)) {
+    if (!link) {
+      return null;
+    }
+    if (!utils.isLocal(link)) {
       return link;
     }
     return path.join(resourcesDirName, utils.makeResourceFileName(link));
