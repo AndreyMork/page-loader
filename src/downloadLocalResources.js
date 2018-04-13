@@ -7,41 +7,6 @@ import _ from 'lodash';
 import debug from 'debug';
 import utils from './utils';
 
-const replaceLocalLinks = (html, urlink) => {
-  const resourcesDirName = utils.makeResourceDirName(urlink);
-  const $ = cheerio.load(html);
-
-  const replaceLink = (i, link) => {
-    if (!link) {
-      return null;
-    }
-    if (!utils.isLocal(link)) {
-      return link;
-    }
-    return path.join(resourcesDirName, utils.makeResourceFileName(link));
-  };
-
-  $('script, img').attr('src', replaceLink);
-  $('link').attr('href', replaceLink);
-
-  return $.html();
-};
-
-export const savePage = (html, urlink, dest) => {
-  const dpLog = debug('page-loader:savePage');
-
-  const fileName = utils.makeHtmlFileName(urlink);
-  const newHtml = replaceLocalLinks(html, urlink);
-  dpLog('local links was replaced');
-
-  return fs.writeFile(path.join(dest, fileName), newHtml)
-    .then(() => dpLog(`successfully saved as '${fileName}' in '${dest}'`))
-    .catch((err) => {
-      dpLog(`saving failed with ${err.message}`);
-
-      throw err;
-    });
-};
 
 const extractLocalLinks = (html) => {
   const $ = cheerio.load(html);
@@ -66,11 +31,10 @@ const saveResource = (data, link, resourcesDirPath) => {
 
   data.pipe(fs.createWriteStream(filePath));
   srLog(`downloaded '${link}' as '${fileName}'`);
-
   return Promise.resolve();
 };
 
-export const downloadLocalResources = (html, urlink, dest) => {
+export default (html, urlink, dest) => {
   const dlrLog = debug('page-loader:downloadLocalResources');
 
   const links = extractLocalLinks(html);
@@ -98,9 +62,4 @@ export const downloadLocalResources = (html, urlink, dest) => {
       throw err;
     })
     .then(() => Promise.all(links.map(downloadResource)));
-};
-
-export default {
-  savePage,
-  downloadLocalResources,
 };

@@ -1,7 +1,8 @@
 import axios from 'axios';
 import path from 'path';
 import debug from 'debug';
-import { savePage, downloadLocalResources } from './loader';
+import savePage from './savePage';
+import downloadLocalResources from './downloadLocalResources';
 
 const debugLog = debug('page-loader:main');
 
