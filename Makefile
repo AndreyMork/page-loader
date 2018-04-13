@@ -32,4 +32,4 @@ page-loader:
 make debug:
 	rm -rf temp
 	mkdir temp
-	DEBUG="page-loader:*"	npm run babel-node src/bin/page-loader.js https://duckduckgo.com -- --output temp
+	DEBUG="page-loader:*"	npm run babel-node src/bin/page-loader.js https://hexlet.io -- --output temp
