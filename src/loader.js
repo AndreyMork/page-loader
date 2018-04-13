@@ -7,7 +7,8 @@ import _ from 'lodash';
 import debug from 'debug';
 import utils from './utils';
 
-const replaceLocalLinks = (html, resourcesDirName) => {
+const replaceLocalLinks = (html, urlink) => {
+  const resourcesDirName = utils.makeResourceDirName(urlink);
   const $ = cheerio.load(html);
 
   const replaceLink = (i, link) => {
@@ -23,24 +24,22 @@ const replaceLocalLinks = (html, resourcesDirName) => {
   $('script, img').attr('src', replaceLink);
   $('link').attr('href', replaceLink);
 
-  debug('page-loader:replaceLocalLinks')('replaced local links');
   return $.html();
 };
 
-export const downloadPage = (html, urlink, dest) => {
-  const dpLog = debug('page-loader:downloadPage');
-
+export const savePage = (html, urlink, dest) => {
+  const dpLog = debug(`page-loader:savePage:${urlink}`);
 
   const fileName = utils.makeHtmlFileName(urlink);
-  dpLog(`'${urlink}' as '${fileName}' in '${dest}'`);
-
-  const resourcesDirName = utils.makeResourceDirName(urlink);
-  const newHtml = replaceLocalLinks(html, resourcesDirName);
+  const newHtml = replaceLocalLinks(html, urlink);
+  dpLog('local links was replaced');
 
   return fs.writeFile(path.join(dest, fileName), newHtml)
-    .then(dpLog('successful download'))
+    .then(() => dpLog(`successfully saved as '${fileName}' in '${dest}'`))
     .catch((err) => {
-      dpLog(`download failed with ${err.message}`);
+      dpLog(`saving failed with ${err.message}`);
+
+      throw err;
     });
 };
 
@@ -55,6 +54,21 @@ const extractLocalLinks = (html) => {
   return uniqLinks;
 };
 
+const saveResource = (data, link, resourcesDirPath) => {
+  const srLog = debug('page-loader:saveResource');
+  const fileName = utils.makeResourceFileName(link);
+  const filePath = path.join(resourcesDirPath, fileName);
+
+  if (Buffer.byteLength(filePath) >= 255) {
+    srLog('name is too long');
+    return Promise.reject(new Error('name is too long'));
+  }
+
+  data.pipe(fs.createWriteStream(filePath));
+  srLog(`downloaded '${link}' as '${fileName}'`);
+
+  return Promise.resolve();
+};
 
 export const downloadLocalResources = (html, urlink, dest) => {
   const dlrLog = debug('page-loader:downloadLocalResources');
@@ -71,30 +85,22 @@ export const downloadLocalResources = (html, urlink, dest) => {
 
   const downloadResource = link => axios
     .request({ method: 'GET', url: encodeURI(makeAbsoluteLink(link)), responseType: 'stream' })
-    .then(({ data }) => {
-      const fileName = utils.makeResourceFileName(link);
-      const filePath = path.join(resourcesDirPath, fileName);
-
-      if (Buffer.byteLength(filePath) >= 255) {
-        return Promise.reject(new Error('name is too long'));
-      }
-
-      data.pipe(fs.createWriteStream(filePath));
-      dlrLog(`downloaded '${link}' as '${fileName}'`);
-
-      return Promise.resolve();
-    })
-    .catch((err) => {
-      dlrLog(err.message);
-      return Promise.reject();
-    });
+    .then(({ data }) => saveResource(data, link, resourcesDirPath));
 
   return fs.mkdir(resourcesDirPath)
-    .then(dlrLog(`resource directory created at '${resourcesDirPath}'`))
+    .catch((err) => {
+      if (err.code === 'EEXIST') {
+        dlrLog(`'${resourcesDirPath}' already exists`);
+        return;
+      }
+
+      throw err;
+    })
+    .then(() => dlrLog(`resource directory created at '${resourcesDirPath}'`))
     .then(() => Promise.all(links.map(downloadResource)));
 };
 
 export default {
-  downloadPage,
+  savePage,
   downloadLocalResources,
 };
