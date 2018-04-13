@@ -28,7 +28,7 @@ const replaceLocalLinks = (html, urlink) => {
 };
 
 export const savePage = (html, urlink, dest) => {
-  const dpLog = debug(`page-loader:savePage:${urlink}`);
+  const dpLog = debug('page-loader:savePage');
 
   const fileName = utils.makeHtmlFileName(urlink);
   const newHtml = replaceLocalLinks(html, urlink);
@@ -88,6 +88,7 @@ export const downloadLocalResources = (html, urlink, dest) => {
     .then(({ data }) => saveResource(data, link, resourcesDirPath));
 
   return fs.mkdir(resourcesDirPath)
+    .then(() => dlrLog(`resource directory created at '${resourcesDirPath}'`))
     .catch((err) => {
       if (err.code === 'EEXIST') {
         dlrLog(`'${resourcesDirPath}' already exists`);
@@ -96,7 +97,6 @@ export const downloadLocalResources = (html, urlink, dest) => {
 
       throw err;
     })
-    .then(() => dlrLog(`resource directory created at '${resourcesDirPath}'`))
     .then(() => Promise.all(links.map(downloadResource)));
 };
 
