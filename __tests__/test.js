@@ -24,14 +24,14 @@ afterAll(async () => {
   await fs.rmdir(tempDirPath);
 });
 
-// test('page not found', async () => {
-//   const url = 'https://hexlet.io/courses';
-//   nock(url)
-//     .get('')
-//     .reply(404, 'check');
-//
-//   expect(pageLoader(url, tempDirPath)).rejects.toBeInstanceOf(Error);
-// });
+test('page not found', async () => {
+  const url = 'https://hexlet.io/courses';
+  nock(url)
+    .get('')
+    .reply(404, 'check');
+
+  expect(pageLoader(url, tempDirPath)).rejects.toBeInstanceOf(Error);
+});
 
 
 test('download resources', async () => {
