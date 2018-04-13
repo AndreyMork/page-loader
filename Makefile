@@ -27,4 +27,9 @@ watch-test:
 page-loader:
 	rm -rf temp
 	mkdir temp
-	npm run babel-node src/bin/page-loader.js https://wikipedia.org
+	npm run babel-node src/bin/page-loader.js https://duckduckgo.com -- --output temp
+
+make debug:
+	rm -rf temp
+	mkdir temp
+	DEBUG="page-loader:*"	npm run babel-node src/bin/page-loader.js https://duckduckgo.com -- --output temp
