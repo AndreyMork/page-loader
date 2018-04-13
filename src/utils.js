@@ -20,13 +20,14 @@ const makeResourceDirName = (link) => {
 
 // TODO: file name too long ???
 const makeResourceFileName = (link) => {
-  const { dir, name, ext } = path.parse(link);
-  const fileName = replaceNonWordCharacters(`${dir}/${name}`);
+  const { pathname, search } = url.parse(link);
+  const { dir, name, ext } = path.parse(pathname);
+  const fileName = replaceNonWordCharacters(`${dir}/${name}${search || ''}`);
 
   return `${fileName}${ext}`;
 };
 
-const isLocal = link => !url.parse(link).hostname;
+const isLocal = link => link.slice(0, 2) !== '//' && !url.parse(link).hostname;
 
 
 export default {
