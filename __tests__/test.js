@@ -15,11 +15,6 @@ beforeAll(async () => {
   tempDirPath = await fs.mkdtemp(path.join(os.tmpdir(), 'page-loader-test-'));
 });
 
-// afterEach(async () => {
-//   const files = await fs.readdir(tempDirPath);
-//   files.forEach(file => fs.unlink(path.join(tempDirPath, file)));
-// });
-
 afterAll(async () => {
   await fs.rmdir(tempDirPath);
 });
