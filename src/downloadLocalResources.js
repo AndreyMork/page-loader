@@ -24,14 +24,15 @@ const saveResource = (data, link, resourcesDirPath) => {
   const fileName = utils.makeResourceFileName(link);
   const filePath = path.join(resourcesDirPath, fileName);
 
-  if (Buffer.byteLength(filePath) >= 255) {
-    srLog('name is too long');
-    return Promise.reject(new Error('name is too long'));
-  }
-
-  data.pipe(fs.createWriteStream(filePath));
-  srLog(`downloaded '${link}' as '${fileName}'`);
-  return Promise.resolve();
+  data.pipe(fs.createWriteStream(filePath)
+    .on('error', (err) => {
+      console.error(`Couldn't save '${link}'`);
+      console.error('reason:');
+      console.error(err.message);
+      process.exitCode = 1;
+    }));
+  srLog(`downloaded '${link}'`);
+  srLog(`as '${fileName}'`);
 };
 
 export default (html, urlink, dest) => {
@@ -53,13 +54,5 @@ export default (html, urlink, dest) => {
 
   return fs.mkdir(resourcesDirPath)
     .then(() => dlrLog(`resource directory created at '${resourcesDirPath}'`))
-    .catch((err) => {
-      if (err.code === 'EEXIST') {
-        dlrLog(`'${resourcesDirPath}' already exists`);
-        return;
-      }
-
-      throw err;
-    })
     .then(() => Promise.all(links.map(downloadResource)));
 };

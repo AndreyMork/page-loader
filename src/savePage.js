@@ -32,10 +32,5 @@ export default (html, urlink, dest) => {
   dpLog('local links was replaced');
 
   return fs.writeFile(path.join(dest, fileName), newHtml)
-    .then(() => dpLog(`successfully saved as '${fileName}' in '${dest}'`))
-    .catch((err) => {
-      dpLog(`saving failed with ${err.message}`);
-
-      throw err;
-    });
+    .then(() => dpLog(`successfully saved as '${fileName}' in '${dest}'`));
 };
