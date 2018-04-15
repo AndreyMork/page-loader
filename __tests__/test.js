@@ -71,7 +71,7 @@ test("dir doesn't exist", async () => {
     .reply(200, '');
 
   return expect(pageLoader(url, path.join(tempDirPath, 'NonExistingDir')))
-    .rejects.toBeInstanceOf(Error);
+    .rejects.toMatchObject({ errno: -2 });
 });
 
 test('name is too long', async () => {
@@ -82,5 +82,5 @@ test('name is too long', async () => {
     .reply(200, '');
 
   return expect(pageLoader(url, tempDirPath))
-    .rejects.toBeInstanceOf(Error);
+    .rejects.toMatchObject({ errno: -36 });
 });
