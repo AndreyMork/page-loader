@@ -16,22 +16,11 @@ export default (url, output) => {
 
   let html;
   return fs.access(dest, fs.constants.W_OK)
-    // .catch((err) => {
-    //   console.error('Destination directory is not OK');
-    //   console.error('reason:');
-    //   console.error(err.message);
-    // })
     .then(() => axios.get(encodeURI(url)))
     .then(({ data, status, statusText }) => {
       debugLog(`${status} ${statusText}`);
       html = data;
     })
-    // .catch((err) => {
-    //   console.error('Request is not OK');
-    //   console.error('reason:');
-    //   console.error(err.message);
-    // })
-    // .then(() => savePage(html, url, dest))
     .then(() => {
       const task = new Listr([{
         title: 'saving page',
@@ -40,15 +29,10 @@ export default (url, output) => {
 
       return task.run();
     })
-    // .catch((err) => {
-    //   console.error('Page was not saved');
-    //   console.error('reason:');
-    //   console.error(err.message);
-    // })
     .then(() => downloadLocalResources(html, url, dest))
     .catch((err) => {
       console.error(err.message);
 
-      return Promise.reject(new Error(err.message));
+      return Promise.reject(err);
     });
 };
