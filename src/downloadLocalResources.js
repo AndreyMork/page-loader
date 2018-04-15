@@ -34,7 +34,6 @@ const saveResource = (data, link, resourcesDirPath) => {
       console.error(`Couldn't save '${link}'`);
       console.error('reason:');
       console.error(err.message);
-      process.exitCode = 1;
     });
 };
 
