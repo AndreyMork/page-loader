@@ -5,6 +5,7 @@ import path from 'path';
 import url from 'url';
 import _ from 'lodash';
 import debug from 'debug';
+import Listr from 'listr';
 import utils from './utils';
 
 
@@ -24,15 +25,17 @@ const saveResource = (data, link, resourcesDirPath) => {
   const fileName = utils.makeResourceFileName(link);
   const filePath = path.join(resourcesDirPath, fileName);
 
-  data.pipe(fs.createWriteStream(filePath)
-    .on('error', (err) => {
+  return fs.writeFile(filePath, data)
+    .then(() => {
+      srLog(`downloaded '${link}'`);
+      srLog(`as '${fileName}'`);
+    })
+    .catch((err) => {
       console.error(`Couldn't save '${link}'`);
       console.error('reason:');
       console.error(err.message);
       process.exitCode = 1;
-    }));
-  srLog(`downloaded '${link}'`);
-  srLog(`as '${fileName}'`);
+    });
 };
 
 export default (html, urlink, dest) => {
@@ -49,8 +52,15 @@ export default (html, urlink, dest) => {
   const makeAbsoluteLink = link => url.resolve(href, link);
 
   const downloadResource = link => axios
-    .request({ method: 'GET', url: encodeURI(makeAbsoluteLink(link)), responseType: 'stream' })
-    .then(({ data }) => saveResource(data, link, resourcesDirPath));
+    .request({ method: 'GET', url: encodeURI(makeAbsoluteLink(link)), responseType: 'arraybuffer' })
+    .then(({ data }) => {
+      const task = new Listr([{
+        title: `downloading ${link}`,
+        task: () => saveResource(data, link, resourcesDirPath),
+      }]);
+
+      return task.run();
+    });
 
   return fs.mkdir(resourcesDirPath)
     .then(() => dlrLog(`resource directory created at '${resourcesDirPath}'`))

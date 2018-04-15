@@ -2,6 +2,7 @@ import axios from 'axios';
 import path from 'path';
 import debug from 'debug';
 import fs from 'mz/fs';
+import Listr from 'listr';
 import savePage from './savePage';
 import downloadLocalResources from './downloadLocalResources';
 
@@ -30,7 +31,15 @@ export default (url, output) => {
     //   console.error('reason:');
     //   console.error(err.message);
     // })
-    .then(() => savePage(html, url, dest))
+    // .then(() => savePage(html, url, dest))
+    .then(() => {
+      const task = new Listr([{
+        title: 'saving page',
+        task: () => savePage(html, url, dest),
+      }]);
+
+      return task.run();
+    })
     // .catch((err) => {
     //   console.error('Page was not saved');
     //   console.error('reason:');
@@ -39,7 +48,6 @@ export default (url, output) => {
     .then(() => downloadLocalResources(html, url, dest))
     .catch((err) => {
       console.error(err.message);
-      process.exitCode = 1;
 
       return Promise.reject(new Error(err.message));
     });

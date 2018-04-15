@@ -8,5 +8,5 @@ program
   .version(version)
   .arguments('<url>')
   .option('-o, --output [path]', 'path to the destination folder', '.')
-  .action(url => pageLoader(url, program.output))
+  .action(url => pageLoader(url, program.output).catch(() => process.exit(1)))
   .parse(process.argv);
