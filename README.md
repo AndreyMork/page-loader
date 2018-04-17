@@ -1,10 +1,10 @@
 # page-loader
 > [Hexlet project](https://ru.hexlet.io/projects)
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/3699cac5ce198b7df41e/maintainability)](https://codeclimate.com/github/AndreyMork/project-lvl3-s202/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/3699cac5ce198b7df41e/test_coverage)](https://codeclimate.com/github/AndreyMork/project-lvl3-s202/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d3daf0a982e8cb6330fb/maintainability)](https://codeclimate.com/github/AndreyMork/page-loader/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/d3daf0a982e8cb6330fb/test_coverage)](https://codeclimate.com/github/AndreyMork/page-loader/test_coverage)
 
-[![Build Status](https://travis-ci.org/AndreyMork/project-lvl3-s202.svg?branch=master)](https://travis-ci.org/AndreyMork/project-lvl3-s202)
+[![Build Status](https://travis-ci.org/AndreyMork/page-loader.svg?branch=master)](https://travis-ci.org/AndreyMork/page-loader)
 
 [![npm](https://img.shields.io/npm/v/aethra-page-loader.svg?style=flat)](https://www.npmjs.com/package/aethra-page-loader)
 ***
