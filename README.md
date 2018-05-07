@@ -1,4 +1,4 @@
-# page-loader
+# Page loader
 > [Hexlet project](https://ru.hexlet.io/projects)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/d3daf0a982e8cb6330fb/maintainability)](https://codeclimate.com/github/AndreyMork/page-loader/maintainability)
