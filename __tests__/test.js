@@ -5,6 +5,7 @@ import os from 'os';
 import fs from 'mz/fs';
 import path from 'path';
 import _ from 'lodash';
+import rimraf from 'rimraf';
 import pageLoader from '../src';
 
 axios.defaults.adapter = httpAdapter;
@@ -16,8 +17,8 @@ beforeAll(async () => {
   tempDirPath = await fs.mkdtemp(path.join(os.tmpdir(), 'page-loader-test-'));
 });
 
-afterAll(async () => {
-  await fs.rmdir(tempDirPath);
+afterAll(() => {
+  rimraf.sync(tempDirPath);
 });
 
 test('download resources', async () => {
