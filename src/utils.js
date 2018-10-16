@@ -2,11 +2,11 @@ import url from 'url';
 import path from 'path';
 
 // TODO: match not latin [a-zA-Z] letters
-const replaceNonWordCharacters = string =>
+const replaceNonWordCharacters = string => (
   string
     .replace(/^[\W_]+/, '')
     .replace(/[\W_]+$/, '')
-    .replace(/[\W_]+/g, '-');
+    .replace(/[\W_]+/g, '-'));
 
 const makeHtmlFileName = (link) => {
   const { hostname, pathname } = url.parse(link);
