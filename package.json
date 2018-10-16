@@ -26,18 +26,18 @@
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "*",
-    "babel-core": "*",
-    "babel-eslint": "*",
-    "babel-jest": "*",
-    "babel-preset-env": "*",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "*",
-    "eslint": "*",
-    "eslint-config-airbnb-base": "*",
-    "eslint-plugin-import": "*",
-    "eslint-plugin-jest": "*",
-    "jest": "*",
-    "jest-cli": "*",
-    "nock": "^9.2.3"
+    "eslint": "^5.7.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^21.25.0",
+    "jest": "^23.6.0",
+    "jest-cli": "^23.6.0",
+    "nock": "^9.6.1"
   },
   "bugs": {
     "url": "git+https://github.com/AndreyMork/page-loader"
@@ -46,10 +46,11 @@
   "dependencies": {
     "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.2",
-    "commander": "^2.15.1",
-    "debug": "^3.1.0",
+    "commander": "^2.19.0",
+    "debug": "^3.2.6",
     "listr": "^0.13.0",
-    "lodash": "^4.17.5",
-    "mz": "^2.7.0"
+    "lodash": "^4.17.11",
+    "mz": "^2.7.0",
+    "rimraf": "^2.6.2"
   }
 }
