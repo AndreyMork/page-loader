@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AndreyMork/page-loader"
+    "url": "https://github.com/AndreyMork/page-loader.git"
   },
   "author": "",
   "license": "ISC",
