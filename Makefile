@@ -1,3 +1,13 @@
+page-loader:
+	rm -rf temp
+	mkdir temp
+	npx babel-node src/bin/page-loader.js https://en.wikipedia.org --output temp
+
+make debug:
+	rm -rf temp
+	mkdir temp
+	DEBUG="page-loader:*"	npx babel-node src/bin/page-loader.js https://duckduckgo.com --output temp
+
 install:
 	npm install
 
@@ -13,23 +23,13 @@ publish:
 	npm publish
 
 lint:
-	npm run eslint .
+	npx eslint .
 
 test:
-	npm run test
+	npm test
 
 test-coverage:
-	npm run test-coverage
+	npm test -- --coverage
 
 watch-test:
-	npm run watch-test
-
-page-loader:
-	rm -rf temp
-	mkdir temp
-	npm run babel-node src/bin/page-loader.js https://en.wikipedia.org -- --output temp
-
-make debug:
-	rm -rf temp
-	mkdir temp
-	DEBUG="page-loader:*"	npm run babel-node src/bin/page-loader.js https://duckduckgo.com -- --output temp
+	npm test -- --watch
